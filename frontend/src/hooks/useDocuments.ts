@@ -12,8 +12,8 @@ export function useDocuments() {
     setLoading(true);
     setError("");
     try {
-      const data = (await listDocuments()) as DocumentItem[];
-      setDocuments(data);
+      const data = await listDocuments();
+      setDocuments(Array.isArray(data) ? (data as DocumentItem[]) : []);
     } catch (err) {
       setError(getErrorMessage(err, "Nao foi possivel carregar documentos."));
     } finally {

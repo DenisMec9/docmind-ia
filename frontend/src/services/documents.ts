@@ -2,7 +2,7 @@ import { api } from "./api";
 
 export async function listDocuments() {
   const { data } = await api.get("/api/documents");
-  return data.data;
+  return Array.isArray(data?.data) ? data.data : [];
 }
 
 export async function uploadDocument(file: File) {

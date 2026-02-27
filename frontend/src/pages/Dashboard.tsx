@@ -4,6 +4,7 @@ import { useDocuments } from "../hooks/useDocuments";
 
 export function DashboardPage() {
   const { documents, loading, error, remove } = useDocuments();
+  const safeDocuments = Array.isArray(documents) ? documents : [];
 
   return (
     <div className="container">
@@ -45,12 +46,12 @@ export function DashboardPage() {
 
         {loading ? (
           <p className="muted">Carregando documentos...</p>
-        ) : documents.length === 0 ? (
+        ) : safeDocuments.length === 0 ? (
           <p className="muted" style={{ textAlign: "center", padding: "20px 0" }}>
             Nenhum documento encontrado. Envie seu primeiro arquivo.
           </p>
         ) : (
-          <DocumentList items={documents} onDelete={remove} />
+          <DocumentList items={safeDocuments} onDelete={remove} />
         )}
       </section>
     </div>

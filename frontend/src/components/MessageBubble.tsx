@@ -6,9 +6,10 @@ export function MessageBubble({
   content,
 }: {
   role: "user" | "assistant";
-  content: string;
+  content: string | undefined;
 }) {
   const isAssistant = role === "assistant";
+  const safeContent = typeof content === "string" ? content : "";
 
   return (
     <div className={`bubble ${isAssistant ? "bubble-assistant" : "bubble-user"}`}>
@@ -17,9 +18,9 @@ export function MessageBubble({
       </strong>
 
       {isAssistant ? (
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{safeContent}</ReactMarkdown>
       ) : (
-        <p style={{ margin: 0, whiteSpace: "pre-wrap" }}>{content}</p>
+        <p style={{ margin: 0, whiteSpace: "pre-wrap" }}>{safeContent}</p>
       )}
     </div>
   );

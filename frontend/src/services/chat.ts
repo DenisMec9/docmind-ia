@@ -7,12 +7,12 @@ export async function sendMessage(documentId: string, message: string) {
 
 export async function listConversations(documentId: string) {
   const { data } = await api.get(`/api/conversations/${documentId}`);
-  return data.data;
+  return Array.isArray(data?.data) ? data.data : [];
 }
 
 export async function listMessages(conversationId: string) {
   const { data } = await api.get(
     `/api/conversations/${conversationId}/messages`,
   );
-  return data.data;
+  return Array.isArray(data?.data) ? data.data : [];
 }

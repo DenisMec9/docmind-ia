@@ -15,9 +15,13 @@ export function useChat(documentId: string) {
     setMessages((prev) => [...prev, { role: "user", content: question }]);
     try {
       const data = await sendMessage(documentId, question);
+      const response =
+        typeof data?.response === "string" && data.response.trim().length > 0
+          ? data.response
+          : "Nao foi possivel gerar resposta agora.";
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.response },
+        { role: "assistant", content: response },
       ]);
     } catch (err) {
       setMessages((prev) => prev.slice(0, -1));
